@@ -5,7 +5,7 @@ using UnityEngine;
 public class Cannon : MonoBehaviour
 {
     float x, y, z;
-
+    public static Vector3 point;
 
     // Start is called before the first frame update
     void Start()
@@ -13,7 +13,7 @@ public class Cannon : MonoBehaviour
     }
     void Cannon_rotate()
     {
-        Vector3 point = new Vector3(Input.mousePosition.x,
+        point = new Vector3(Input.mousePosition.x,
                 Input.mousePosition.y, 10-Camera.main.transform.position.z);
 
         point = Camera.main.ScreenToWorldPoint(point);
@@ -23,7 +23,7 @@ public class Cannon : MonoBehaviour
         transform.rotation = Quaternion.FromToRotation(Vector3.up, point);
         //this.x = point.x;
         //this.y = point.y;
-
+        //Debug.Log(transform.rotation.x);
     }
     // Update is called once per frame
     void Update()

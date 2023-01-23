@@ -11,23 +11,27 @@ public class Cannon : MonoBehaviour
     void Start()
     {
     }
-    void Cannon_rotate()
+    /// <summary>
+    /// 대포의 방향을 마우스좌표로 회전
+    /// </summary>
+    void CannonRotate()
     {
         point = new Vector3(Input.mousePosition.x,
-                Input.mousePosition.y, 10-Camera.main.transform.position.z);
+        Input.mousePosition.y, 10-Camera.main.transform.position.z);
 
         point = Camera.main.ScreenToWorldPoint(point);
 
         point = point - transform.position;
 
         transform.rotation = Quaternion.FromToRotation(Vector3.up, point);
-        //this.x = point.x;
-        //this.y = point.y;
-        //Debug.Log(transform.rotation.x);
     }
-    // Update is called once per frame
+    
+
     void Update()
     {
-        Cannon_rotate();
+        CannonRotate();
     }
 }
+/*
+큐브 프리펩을 캐논 위치에 생성> 중력 없엠> 큐브발사(중력 만듬)> 0.1초후 큐브생성>>
+*/

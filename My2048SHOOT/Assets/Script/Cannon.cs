@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class Cannon : MonoBehaviour
 {
     CreatCube theCreatCube;
     public static Vector3 point;
+    public GameObject powerTextobj;
+    TextMeshProUGUI powerText;
     float power =0;
     float x, y, z;
 
@@ -13,6 +15,7 @@ public class Cannon : MonoBehaviour
     void Start()
     {
         theCreatCube = FindObjectOfType<CreatCube>();
+        powerText = powerTextobj.GetComponent<TextMeshProUGUI>();
     }
     /// <summary>
     /// 대포의 방향을 마우스좌표로 회전
@@ -44,8 +47,9 @@ public class Cannon : MonoBehaviour
         CannonRotate();
 
         if(Input.GetKey("space")){
-            power= power + 0.6f;
+            power= power + 0.2f;
             Debug.Log(power);
+            powerText.text = power.ToString("F1");
         }
         if(Input.GetKeyUp("space")){
             ShootCube(CreatCube.nowCube, power);

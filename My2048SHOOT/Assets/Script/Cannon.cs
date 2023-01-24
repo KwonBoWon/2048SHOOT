@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
-    float x, y, z;
+    CreatCube theCreatCube;
     public static Vector3 point;
+    float power =0;
+    float x, y, z;
 
     // Start is called before the first frame update
     void Start()
     {
+        theCreatCube = FindObjectOfType<CreatCube>();
     }
     /// <summary>
     /// 대포의 방향을 마우스좌표로 회전
     /// </summary>
-    void CannonRotate()
+    public void CannonRotate()
     {
         point = new Vector3(Input.mousePosition.x,
         Input.mousePosition.y, 10-Camera.main.transform.position.z);
@@ -25,11 +28,35 @@ public class Cannon : MonoBehaviour
 
         transform.rotation = Quaternion.FromToRotation(Vector3.up, point);
     }
-    
+    /// <summary>
+    /// 큐브를 캐논방향으로 파워만큼 발사함
+    /// </summary>
+    /// <param name="cube">날라갈 큐브</param>
+    /// <param name="power">발사할 힘</param>
+    public void ShootCube(GameObject cube, float power){
+        Rigidbody rb;
+        rb = cube.GetComponent<Rigidbody>();   
+        rb.AddForce(point*power);
+    }
 
     void Update()
     {
         CannonRotate();
+
+        if(Input.GetKey("space")){
+            power= power + 0.6f;
+            Debug.Log(power);
+        }
+        if(Input.GetKeyUp("space")){
+            ShootCube(CreatCube.nowCube, power);
+            power = 0;
+            Debug.Log(CreatCube.nowCube);
+            CreatCube.nowCube.GetComponent<Rigidbody>().useGravity = true;
+
+
+            //theCreatCube.CubeSpawn();   
+        }
+
     }
 }
 /*

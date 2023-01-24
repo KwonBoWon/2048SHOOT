@@ -12,11 +12,7 @@ public class Shoot : MonoBehaviour
     void Update()
     {
     }
-    /// <summary>
-    /// 큐브를 캐논방향으로 파워만큼 발사함
-    /// </summary>
-    /// <param name="cube">날라갈 큐브</param>
-    /// <param name="power">발사할 힘</param>
+
     public static void ShootCube(GameObject cube, float power){
         Rigidbody rb;
         rb = cube.GetComponent<Rigidbody>();   

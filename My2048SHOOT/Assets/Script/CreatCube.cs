@@ -20,7 +20,7 @@ public class CreatCube : MonoBehaviour
     public void CubeSpawn(){
         nowCube = Instantiate(cube2, gameObject.transform.position, Quaternion.identity);
         Debug.Log(this.transform.position);
-        nowCube.transform.name = "44";
+        
         nowCube.transform.SetParent(cubeParents.transform);
         nowCube.transform.SetAsFirstSibling();
         cubeList.Add(nowCube);

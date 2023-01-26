@@ -48,7 +48,7 @@ public class Cannon : MonoBehaviour
 
         if(Input.GetKey("space")){
             power= power + 0.2f;
-            Debug.Log(power);
+            //Debug.Log(power);
             powerText.text = power.ToString("F1");
         }
         if(Input.GetKeyUp("space")){

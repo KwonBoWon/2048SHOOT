@@ -22,7 +22,7 @@ public class CreatCube : MonoBehaviour
         Debug.Log(this.transform.position);
         
         nowCube.transform.SetParent(cubeParents.transform);
-        nowCube.transform.SetAsFirstSibling();
+        nowCube.transform.SetAsLastSibling();
         cubeList.Add(nowCube);
 
         Gravity(nowCube, false);

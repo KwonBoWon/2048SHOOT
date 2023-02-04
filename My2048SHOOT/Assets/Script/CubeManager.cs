@@ -6,7 +6,6 @@ public class CubeManager : MonoBehaviour
 {
     public static List<GameObject> preCubes = new List<GameObject>();
 
-    
     void Start(){
         //큐브 프리펩 찾아서 넣음
         for(int i=1;i<=11;i++){
@@ -21,29 +20,67 @@ public class CubeManager : MonoBehaviour
     /// <param name="cube2">큐브2 삭제</param>
     /// <param name="cubeName">큐브이름</param>
     public static void MergeCube(GameObject cube1,GameObject cube2,  string cubeName){
-        //int cubeNum = int.Parse(cubeName);
-        int cubeNum = StringToInt(cubeName);    
-        //cubeNum = (int)(Mathf.Log(2,cubeNum));// 2부터 시작하므로
-        Debug.Log("#"+ cubeName);
-        Debug.Log("*" + cubeNum);
-        GameObject mergedCube = Instantiate(preCubes[cubeNum], cube1.transform.position, Quaternion.identity);
+        Cube cube1Cube = cube1.GetComponent<Cube>();
+        Cube cube2Cube = cube2.GetComponent<Cube>();
 
-        Destroy(cube1); Destroy(cube2);
+        Vector3 core = new Vector3(0.1f, -2f, 8f);
+        if(!cube1Cube.isUsed){
+            if((cube1.transform.transform.position - core).magnitude  < (cube2.transform.transform.position - core).magnitude){
+                //int cubeNum = int.Parse(cubeName);
+                int cubeNum = StringToInt(cubeName);    
+                //cubeNum = (int)(Mathf.Log(2,cubeNum));// 2부터 시작하므로
+                GameObject mergedCube = Instantiate(preCubes[cubeNum], cube1.transform.position, Quaternion.identity);
+                
+                Destroy(cube1); Destroy(cube2);
+            }
+            cube1Cube.isUsed = true;
+
+        }
+        else {
+            
+            cube2Cube.isUsed = true;
+            return;
+        }
     }
 
-    public static int StringToInt(string a){
-        int b = 0;
-        switch(a) {
+    public static int StringToInt(string param){//mathf log함수가 왜 오류나는지 모르겠음
+        int answer = 0;
+        switch(param) {
 				case "2(Clone)": //->1
-                    b = 1;
+                    answer = 1;
 					break;
 				case "4(Clone)": //->2
-                    b = 2;
+                    answer = 2;
 					break;
-				case "8(Clone)": //8->3
-                    b = 3;
+				case "8(Clone)": //->3
+                    answer = 3;
 					break;
+                case "16(Clone)": //->3
+                    answer = 4;
+					break;
+                case "32(Clone)": //->3
+                    answer = 5;
+					break;
+                case "64(Clone)": //->3
+                    answer = 6;
+					break;
+                case "128(Clone)": //->3
+                    answer = 7;
+					break;
+                case "256(Clone)": //->3
+                    answer = 8;
+					break;
+                case "512(Clone)": //->3
+                    answer = 9;
+					break;
+                case "1024(Clone)": //->3
+                    answer = 10;
+					break;
+                case "2048(Clone)": //->3
+                    answer = 11;
+					break;
+                
 		}
-        return b;
+        return answer;
     }
 }

@@ -9,15 +9,18 @@ public class Cube : MonoBehaviour
     //첫번쨰충돌(벽이나 큐브) 까지 꺼야함
     private void OnCollisionEnter(Collision collision)
     {   
-        if(isUsed){
-            Destroy(this);
-        }
+        //if(isUsed){
+        //    return ;
+        //}
         if(!firstCollision){
-            if(collision.collider.CompareTag("cube")){
+            
+            if(collision.collider.CompareTag("cube") && gameObject.name == collision.gameObject.name){
                 Cube cube2 = collision.gameObject.GetComponent<Cube>();
-                cube2.isUsed = true;
+
                 
                 CubeManager.MergeCube(gameObject, collision.gameObject, gameObject.name);
+                //cube2.isUsed = true;
+                //isUsed = true;
             }
         }
         else{

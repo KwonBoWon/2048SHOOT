@@ -32,7 +32,7 @@ public class Cannon : MonoBehaviour
         transform.rotation = Quaternion.FromToRotation(Vector3.up, point);
     }
     /// <summary>
-    /// 큐브를 캐논방향으로 파워만큼 발사함
+    /// 큐브를 캐논방향으로 파워만큼 발사함 //현재 스페이스바로 여러번 발사하는 버그있음(큐브안에들어가는 스크립트로 해결해야할거 같음)
     /// </summary>
     /// <param name="cube">날라갈 큐브</param>
     /// <param name="power">발사할 힘</param>

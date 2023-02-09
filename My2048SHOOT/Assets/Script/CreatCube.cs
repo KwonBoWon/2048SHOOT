@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CreatCube : MonoBehaviour
 {
+    public static bool onClick = true; 
     public static GameObject nowCube;
     public GameObject cube2;
     public GameObject cubeParents;
@@ -37,7 +38,8 @@ public class CreatCube : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown("mouse 0")){
+        if(Input.GetKeyDown("mouse 0") && onClick){
+            onClick = false;
             CubeSpawn();
             Debug.Log(nowCube);
         }

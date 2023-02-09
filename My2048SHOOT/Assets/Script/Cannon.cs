@@ -32,7 +32,7 @@ public class Cannon : MonoBehaviour
         transform.rotation = Quaternion.FromToRotation(Vector3.up, point);
     }
     /// <summary>
-    /// 큐브를 캐논방향으로 파워만큼 발사함 //현재 스페이스바로 여러번 발사하는 버그있음(큐브안에들어가는 스크립트로 해결해야할거 같음)
+    /// 큐브를 캐논방향으로 파워만큼 발사함
     /// </summary>
     /// <param name="cube">날라갈 큐브</param>
     /// <param name="power">발사할 힘</param>
@@ -44,18 +44,22 @@ public class Cannon : MonoBehaviour
 
     void Update()
     {
-        CannonRotate();
+        if(CreatCube.onClick){
+            CannonRotate();
+        }
 
-        if(Input.GetKey("space")){
+
+        if(Input.GetKey("space") && !CreatCube.onClick){
             power= power + 0.2f;
             //Debug.Log(power);
             powerText.text = power.ToString("F1");
         }
-        if(Input.GetKeyUp("space")){
+        if(Input.GetKeyUp("space") && !CreatCube.onClick){
             ShootCube(CreatCube.nowCube, power);
             power = 0;
             Debug.Log(CreatCube.nowCube);
             CreatCube.nowCube.GetComponent<Rigidbody>().useGravity = true;
+            CreatCube.onClick = true;
 
 
             //theCreatCube.CubeSpawn();   
@@ -65,4 +69,15 @@ public class Cannon : MonoBehaviour
 }
 /*
 큐브 프리펩을 캐논 위치에 생성> 중력 없엠> 큐브발사(중력 만듬)> 0.1초후 큐브생성>>
+
+
+지금 넣어야하는거
+좌클릭으로 생성 스페이스바로 발사 인데
+좌클릭으로 생성 후 스페이스바 발사전까지 각도 고정하기
+
+드래그로도 할 수있게 구현하기
+
+게임 커버사진
+
+
 */

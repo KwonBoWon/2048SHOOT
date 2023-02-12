@@ -36,13 +36,4 @@ public class CreatCube : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        if(Input.GetKeyDown("mouse 0") && onClick){
-            onClick = false;
-            CubeSpawn();
-            Debug.Log(nowCube);
-        }
-    }
-
 }

@@ -60,7 +60,7 @@ public class Cannon : MonoBehaviour
 
         // 스페이스바 누르면 파워증가
         if(Input.GetKey("space") && !CreatCube.onClick){
-            power= power + 0.2f;
+            power= power + 0.1f;
             //Debug.Log(power);
             powerText.text = power.ToString("F1");
         }

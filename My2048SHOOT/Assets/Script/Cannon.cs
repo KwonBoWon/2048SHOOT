@@ -92,7 +92,4 @@ public class Cannon : MonoBehaviour
 
 2 4 8 tkwls
 
-클릭기능 -> 스페이스바
-스페이스바로쏘기전에 충돌판정 없에야함
-
 */

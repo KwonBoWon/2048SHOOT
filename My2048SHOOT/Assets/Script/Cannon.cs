@@ -9,6 +9,8 @@ public class Cannon : MonoBehaviour
     public GameObject powerTextobj;
     TextMeshProUGUI powerText;
 
+    bool isDelay = false;
+
     
     float power =0;
     float x, y, z;
@@ -51,7 +53,7 @@ public class Cannon : MonoBehaviour
         }
 
         // 스페이스바 누를때 큐브생성
-         if(Input.GetKeyDown("space") && CreatCube.onClick){
+         if(Input.GetKeyDown("space") && CreatCube.onClick && !isDelay){
             CreatCube.onClick = false;
             theCreatCube.CubeSpawn();
             CreatCube.nowCube.GetComponent<BoxCollider>().enabled = false; // 발사전 합쳐져서 삭제되는것 방지
@@ -59,14 +61,18 @@ public class Cannon : MonoBehaviour
         }
 
         // 스페이스바 누르면 파워증가
-        if(Input.GetKey("space") && !CreatCube.onClick){
-            power= power + 0.1f;
+        if(Input.GetKey("space") && !CreatCube.onClick && !isDelay){
+
+            if (power < 35f) power = power + 10f * Time.deltaTime;
             //Debug.Log(power);
             powerText.text = power.ToString("F1");
         }
 
         // 스페이스바를 떼면 발사
-        if(Input.GetKeyUp("space") && !CreatCube.onClick){
+        if(Input.GetKeyUp("space") && !CreatCube.onClick && !isDelay)
+        {
+            isDelay = true;
+            Invoke("isDelayFalse", 0.35f);//발사 딜레이
             ShootCube(CreatCube.nowCube, power);
             power = 0;
             Debug.Log(CreatCube.nowCube);
@@ -77,6 +83,11 @@ public class Cannon : MonoBehaviour
             //theCreatCube.CubeSpawn();   
         }
 
+
+    }
+    void isDelayFalse()
+    {
+        isDelay = false;
     }
 }
 /*

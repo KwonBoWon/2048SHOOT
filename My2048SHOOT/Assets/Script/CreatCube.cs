@@ -10,10 +10,8 @@ public class CreatCube : MonoBehaviour
     public GameObject cubeParents;
 
     public List<GameObject> cubeList = new List<GameObject>();
-    void Start()
-    {
-        
-    }
+
+
     /// <summary>
     /// 큐브를 생성함
     /// </summary>

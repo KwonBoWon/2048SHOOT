@@ -11,8 +11,8 @@ public class Cannon : MonoBehaviour
 
     bool isDelay = false;
 
-    
-    float power =0;
+
+    float power = 0;
     float x, y, z;
 
     // Start is called before the first frame update
@@ -27,7 +27,7 @@ public class Cannon : MonoBehaviour
     public void CannonRotate()
     {
         point = new Vector3(Input.mousePosition.x,
-        Input.mousePosition.y, 10-Camera.main.transform.position.z);
+        Input.mousePosition.y, 10 - Camera.main.transform.position.z);
 
         point = Camera.main.ScreenToWorldPoint(point);
 
@@ -40,50 +40,56 @@ public class Cannon : MonoBehaviour
     /// </summary>
     /// <param name="cube">날라갈 큐브</param>
     /// <param name="power">발사할 힘</param>
-    public void ShootCube(GameObject cube, float power){
+    public void ShootCube(GameObject cube, float power)
+    {
         Rigidbody rb;
-        rb = cube.GetComponent<Rigidbody>();   
-        rb.AddForce(point*power);
+        rb = cube.GetComponent<Rigidbody>();
+        rb.AddForce(point * power);
     }
 
     void Update()
     {
-        if(CreatCube.onClick){
-            CannonRotate();
-        }
-
-        // 스페이스바 누를때 큐브생성
-         if(Input.GetKeyDown("space") && CreatCube.onClick && !isDelay){
-            CreatCube.onClick = false;
-            theCreatCube.CubeSpawn();
-            CreatCube.nowCube.GetComponent<BoxCollider>().enabled = false; // 발사전 합쳐져서 삭제되는것 방지
-  
-        }
-
-        // 스페이스바 누르면 파워증가
-        if(Input.GetKey("space") && !CreatCube.onClick && !isDelay){
-
-            if (power < 35f) power = power + 10f * Time.deltaTime;
-            //Debug.Log(power);
-            powerText.text = power.ToString("F1");
-        }
-
-        // 스페이스바를 떼면 발사
-        if(Input.GetKeyUp("space") && !CreatCube.onClick && !isDelay)
+        if (!Setting.isSettingOn)
         {
-            isDelay = true;
-            Invoke("isDelayFalse", 0.35f);//발사 딜레이
-            ShootCube(CreatCube.nowCube, power);
-            power = 0;
-            Debug.Log(CreatCube.nowCube);
-            CreatCube.nowCube.GetComponent<Rigidbody>().useGravity = true;
-            CreatCube.onClick = true;
+            if (CreatCube.onClick)
+            {
+                CannonRotate();
+            }
 
-            CreatCube.nowCube.GetComponent<BoxCollider>().enabled = true;
-            //theCreatCube.CubeSpawn();   
+            // 스페이스바 누를때 큐브생성
+            if (Input.GetKeyDown("space") && CreatCube.onClick && !isDelay)
+            {
+                CreatCube.onClick = false;
+                theCreatCube.CubeSpawn();
+                CreatCube.nowCube.GetComponent<BoxCollider>().enabled = false; // 발사전 합쳐져서 삭제되는것 방지
+
+            }
+
+            // 스페이스바 누르면 파워증가
+            if (Input.GetKey("space") && !CreatCube.onClick && !isDelay)
+            {
+
+                if (power < 35f) power = power + 10f * Time.deltaTime;
+                //Debug.Log(power);
+                powerText.text = power.ToString("F1");
+            }
+
+            // 스페이스바를 떼면 발사
+            if (Input.GetKeyUp("space") && !CreatCube.onClick && !isDelay)
+            {
+                isDelay = true;
+                Invoke("isDelayFalse", 0.35f);//발사 딜레이
+                ShootCube(CreatCube.nowCube, power);
+                power = 0;
+                Debug.Log(CreatCube.nowCube);
+                CreatCube.nowCube.GetComponent<Rigidbody>().useGravity = true;
+                CreatCube.onClick = true;
+
+                CreatCube.nowCube.GetComponent<BoxCollider>().enabled = true;
+                //theCreatCube.CubeSpawn();   
+            }
+
         }
-
-
     }
     void isDelayFalse()
     {

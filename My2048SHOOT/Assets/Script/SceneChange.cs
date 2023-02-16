@@ -26,11 +26,17 @@ public class SceneChange : MonoBehaviour
            
         }
     }
-
     
     public void SceneChanges(){
         FadeOut();  
     }
+
+    public void ParamSceneChange(string name)
+    {
+        FadeOut();
+        sceneName = name;
+    }
+
     void Start(){
 
     }

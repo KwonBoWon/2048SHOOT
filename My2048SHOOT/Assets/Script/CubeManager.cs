@@ -6,12 +6,15 @@ public class CubeManager : MonoBehaviour
 {
     public static List<GameObject> preCubes = new List<GameObject>();
 
+    SceneChange theSceneChange;
+
     void Start(){
         //큐브 프리펩 찾아서 넣음
         for(int i=1;i<=11;i++){
             preCubes.Add(Resources.Load<GameObject>("Prefeb/"+(Mathf.Pow(2,i)).ToString()));
             Debug.Log(preCubes[i-1]);
-        } 
+        }
+        theSceneChange = FindObjectOfType<SceneChange>();
     }
     /// <summary>
     /// 큐브둘을 합쳐서 다음큐브를 만들고 큐브둘을 삭제함
@@ -22,12 +25,18 @@ public class CubeManager : MonoBehaviour
     public static void MergeCube(GameObject cube1,GameObject cube2,  string cubeName){
         Cube cube1Cube = cube1.GetComponent<Cube>();
         Cube cube2Cube = cube2.GetComponent<Cube>();
-
+        Effect.audioSoure.Play();
         Vector3 core = new Vector3(0.1f, -2f, 8f);
         if(!cube1Cube.isUsed){
             if((cube1.transform.transform.position - core).magnitude  < (cube2.transform.transform.position - core).magnitude){
                 //int cubeNum = int.Parse(cubeName);
-                int cubeNum = StringToInt(cubeName);    
+                int cubeNum = StringToInt(cubeName);
+                if (cubeNum== 11)
+                {
+                    SceneChange theSceneChange;
+                    theSceneChange = FindObjectOfType<SceneChange>();
+                    theSceneChange.ParamSceneChange("Clear");
+                }
                 //cubeNum = (int)(Mathf.Log(2,cubeNum));// 2부터 시작하므로
                 GameObject mergedCube = Instantiate(preCubes[cubeNum], cube1.transform.position, Quaternion.identity);
                 
@@ -78,6 +87,7 @@ public class CubeManager : MonoBehaviour
 					break;
                 case "2048(Clone)": //->3
                     answer = 11;
+                    
 					break;
                 
 		}

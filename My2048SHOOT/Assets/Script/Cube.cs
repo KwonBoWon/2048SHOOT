@@ -18,7 +18,7 @@ public class Cube : MonoBehaviour
                 Cube cube2 = collision.gameObject.GetComponent<Cube>();
 
                 
-                CubeManager.MergeCube(gameObject, collision.gameObject, gameObject.name);
+                CubeManager.instance.MergeCube(gameObject, collision.gameObject, gameObject.name);
                 //cube2.isUsed = true;
                 //isUsed = true;
             }

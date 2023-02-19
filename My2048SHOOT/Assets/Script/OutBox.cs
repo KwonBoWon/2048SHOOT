@@ -8,7 +8,7 @@ public class OutBox : MonoBehaviour
     //public List<GameObject> outObj = new List<GameObject>();
     public GameObject hpTextobj;
     public TextMeshProUGUI hpText;
-
+    bool GameOver = false;
     SceneChange theSceneChange;
     void Start()
     {
@@ -17,7 +17,7 @@ public class OutBox : MonoBehaviour
     }
 
     /// <summary>
-    /// Å¥ºê°¡ ¹Û¿¡¶³¾îÁö¸é »èÁ¦ÈÄ Ã¼·Â°¨¼Ò
+    /// «à?? ??????????? ?????? «ä?¡ë???
     /// </summary>
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
@@ -34,9 +34,10 @@ public class OutBox : MonoBehaviour
             
             hpText.text = (hp - cubeNumf).ToString();
 
-            //Ã¼·ÂÀÌ 0ÀÌÇÏ°¡µÇ¸é °ÔÀÓ¿À¹ö
-            if ((hp - cubeNumf) <= 0f)
+            //«ä???? 0???????? ???????
+            if ((hp - cubeNumf) <= 0f && !GameOver)
             {
+                GameOver = true;
                 theSceneChange.ParamSceneChange("GameOver");
             }
             

@@ -5,10 +5,14 @@ using UnityEngine;
 public class CubeManager : MonoBehaviour
 {
     public static List<GameObject> preCubes = new List<GameObject>();
-
+    public static CubeManager instance;
     SceneChange theSceneChange;
-
+    
+    void Awake() {
+        instance = this;    
+    }
     void Start(){
+        
         //큐브 프리펩 찾아서 넣음
         for(int i=1;i<=11;i++){
             preCubes.Add(Resources.Load<GameObject>("Prefeb/"+(Mathf.Pow(2,i)).ToString()));
@@ -22,7 +26,7 @@ public class CubeManager : MonoBehaviour
     /// <param name="cube1">큐브1 자리에 다음큐브 생성, 큐브1 삭제</param>
     /// <param name="cube2">큐브2 삭제</param>
     /// <param name="cubeName">큐브이름</param>
-    public static void MergeCube(GameObject cube1,GameObject cube2,  string cubeName){
+    public void MergeCube(GameObject cube1,GameObject cube2,  string cubeName){
         Cube cube1Cube = cube1.GetComponent<Cube>();
         Cube cube2Cube = cube2.GetComponent<Cube>();
         Effect.audioSoure.Play();
@@ -42,13 +46,26 @@ public class CubeManager : MonoBehaviour
                 
                 Destroy(cube1); Destroy(cube2);
             }
-            cube1Cube.isUsed = true;
+            else{
+                cube1Cube.isUsed = true;
+                
+                StartCoroutine(IsUsedBack(cube1));
+            }
+            return;
 
         }
         else {
-            
-            cube2Cube.isUsed = true;
             return;
+        }
+    }
+
+    IEnumerator IsUsedBack( GameObject cube){
+    
+        yield return new WaitForSeconds(0.5f);
+    
+        if(cube!=null){
+            Cube cubeCube = cube.GetComponent<Cube>();
+            cubeCube.isUsed = false;
         }
     }
 

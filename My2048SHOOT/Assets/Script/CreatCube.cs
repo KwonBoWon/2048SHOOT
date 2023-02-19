@@ -11,7 +11,9 @@ public class CreatCube : MonoBehaviour
 
     public List<GameObject> cubeList = new List<GameObject>();
 
-
+    void Start(){
+        onClick = true; 
+    }
     /// <summary>
     /// 큐브를 생성함
     /// </summary>

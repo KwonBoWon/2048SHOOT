@@ -20,6 +20,8 @@ public class Cannon : MonoBehaviour
     {
         theCreatCube = FindObjectOfType<CreatCube>();
         powerText = powerTextobj.GetComponent<TextMeshProUGUI>();
+        isDelay = false;
+        power = 0;
     }
     /// <summary>
     /// 대포의 방향을 마우스좌표로 회전
@@ -62,13 +64,12 @@ public class Cannon : MonoBehaviour
                 CreatCube.onClick = false;
                 theCreatCube.CubeSpawn();
                 CreatCube.nowCube.GetComponent<BoxCollider>().enabled = false; // 발사전 합쳐져서 삭제되는것 방지
-
             }
 
             // 스페이스바 누르면 파워증가
             if (Input.GetKey("space") && !CreatCube.onClick && !isDelay)
             {
-
+                
                 if (power < 35f) power = power + 10f * Time.deltaTime;
                 //Debug.Log(power);
                 powerText.text = power.ToString("F1");

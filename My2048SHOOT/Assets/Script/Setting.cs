@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Setting : MonoBehaviour
 {
     public GameObject settingUI;
-    public static bool isSettingOn = false;
+    public static bool isSettingOn;
+
+    void Start(){
+        isSettingOn = false;
+    }
     /// <summary>
     /// Setting On/Off
     /// </summary>
@@ -30,6 +34,10 @@ public class Setting : MonoBehaviour
     {
         Application.Quit();
     }
+    public void Restart(){
+        Time.timeScale = 1.0F;
+        SceneManager.LoadScene("Main");
 
+    }
 
 }

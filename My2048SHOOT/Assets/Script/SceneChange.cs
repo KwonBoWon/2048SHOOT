@@ -38,7 +38,7 @@ public class SceneChange : MonoBehaviour
     }
 
     void Start(){
-
+        fadeCount = 0;
     }
     void Update()
     {

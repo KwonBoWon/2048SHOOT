@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TurtleAni : MonoBehaviour
 {
-    // Start is called before the first frame update
     //2.3 to -4.29
     public Transform Target;
     public float Speed = 1f;

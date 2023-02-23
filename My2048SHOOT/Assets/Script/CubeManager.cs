@@ -46,15 +46,14 @@ public class CubeManager : MonoBehaviour
                 
                 Destroy(cube1); Destroy(cube2);
             }
-            else{
-                cube1Cube.isUsed = true;
+            cube1Cube.isUsed = true;
                 
-                StartCoroutine(IsUsedBack(cube1));
-            }
-            return;
+            StartCoroutine(IsUsedBack(cube1));
 
         }
         else {
+            cube2Cube.isUsed = true;
+            StartCoroutine(IsUsedBack(cube2));
             return;
         }
     }

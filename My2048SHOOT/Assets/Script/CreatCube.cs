@@ -9,7 +9,7 @@ public class CreatCube : MonoBehaviour
     public GameObject cube2;
     public GameObject cubeParents;
 
-    public List<GameObject> cubeList = new List<GameObject>();
+    //public List<GameObject> cubeList = new List<GameObject>();
 
     void Start(){
         onClick = true; 
@@ -22,9 +22,10 @@ public class CreatCube : MonoBehaviour
         nowCube = Instantiate(cube2, gameObject.transform.position, Quaternion.identity);
         Debug.Log(this.transform.position);
         
+        
         nowCube.transform.SetParent(cubeParents.transform);
         nowCube.transform.SetAsLastSibling();
-        cubeList.Add(nowCube);
+        //cubeList.Add(nowCube);
 
         Gravity(nowCube, false);
 

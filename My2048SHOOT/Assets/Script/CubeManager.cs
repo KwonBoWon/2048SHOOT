@@ -7,7 +7,7 @@ public class CubeManager : MonoBehaviour
     public static List<GameObject> preCubes = new List<GameObject>();
     public static CubeManager instance;
     SceneChange theSceneChange;
-    
+    public GameObject cubeParents;
     void Awake() {
         instance = this;    
     }
@@ -20,6 +20,7 @@ public class CubeManager : MonoBehaviour
         }
         theSceneChange = FindObjectOfType<SceneChange>();
     }
+
     /// <summary>
     /// 큐브둘을 합쳐서 다음큐브를 만들고 큐브둘을 삭제함
     /// </summary>
@@ -29,35 +30,41 @@ public class CubeManager : MonoBehaviour
     public void MergeCube(GameObject cube1,GameObject cube2,  string cubeName){
         Cube cube1Cube = cube1.GetComponent<Cube>();
         Cube cube2Cube = cube2.GetComponent<Cube>();
-        Effect.audioSoure.Play();
+
         Vector3 core = new Vector3(0.1f, -2f, 8f);
+
         if(!cube1Cube.isUsed){
-            if((cube1.transform.transform.position - core).magnitude  < (cube2.transform.transform.position - core).magnitude){
-                //int cubeNum = int.Parse(cubeName);
+            if((cube1.transform.transform.position - core).magnitude  < (cube2.transform.transform.position - core).magnitude){//두큐브중 core가까운 큐브위치에서 생성
+                Effect.audioSoure.Play(); //큐브 합치기 사운드
                 int cubeNum = StringToInt(cubeName);
-                if (cubeNum== 11)
+                if (cubeNum== 11) //큐브가 2048일때 엔딩씬으로
                 {
                     SceneChange theSceneChange;
                     theSceneChange = FindObjectOfType<SceneChange>();
                     theSceneChange.ParamSceneChange("Clear");
                 }
-                //cubeNum = (int)(Mathf.Log(2,cubeNum));// 2부터 시작하므로
-                GameObject mergedCube = Instantiate(preCubes[cubeNum], cube1.transform.position, Quaternion.identity);
+                GameObject mergedCube = Instantiate(preCubes[cubeNum], cube1.transform.position, Quaternion.identity); //큐브생성
+                mergedCube.transform.SetParent(cubeParents.transform);
+                mergedCube.transform.SetAsLastSibling();
                 
-                Destroy(cube1); Destroy(cube2);
+                Destroy(cube1); Destroy(cube2); //합쳐진큐브 삭제
             }
-            cube1Cube.isUsed = true;
-                
-            StartCoroutine(IsUsedBack(cube1));
+            //cube1Cube.isUsed = true; //여러개 같이 합쳐지는것 방지
+            //StartCoroutine(IsUsedBack(cube1));
 
         }
         else {
-            cube2Cube.isUsed = true;
+            cube2Cube.isUsed = true; //여러개 같이 합쳐지는것 방지
             StartCoroutine(IsUsedBack(cube2));
             return;
         }
     }
 
+    /// <summary>
+    /// isUsed 0.5초후 false return
+    /// </summary>
+    /// <param name="cube"></param>
+    /// <returns></returns>
     IEnumerator IsUsedBack( GameObject cube){
     
         yield return new WaitForSeconds(0.5f);
@@ -68,6 +75,11 @@ public class CubeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// log함수 대용
+    /// </summary>
+    /// <param name="param">큐브네임</param>
+    /// <returns></returns>
     public static int StringToInt(string param){//mathf log함수가 왜 오류나는지 모르겠음
         int answer = 0;
         switch(param) {
@@ -80,28 +92,28 @@ public class CubeManager : MonoBehaviour
 				case "8(Clone)": //->3
                     answer = 3;
 					break;
-                case "16(Clone)": //->3
+                case "16(Clone)": //->4
                     answer = 4;
 					break;
-                case "32(Clone)": //->3
+                case "32(Clone)": //->5
                     answer = 5;
 					break;
-                case "64(Clone)": //->3
+                case "64(Clone)": //->6
                     answer = 6;
 					break;
-                case "128(Clone)": //->3
+                case "128(Clone)": //->7
                     answer = 7;
 					break;
-                case "256(Clone)": //->3
+                case "256(Clone)": //->8
                     answer = 8;
 					break;
-                case "512(Clone)": //->3
+                case "512(Clone)": //->9
                     answer = 9;
 					break;
-                case "1024(Clone)": //->3
+                case "1024(Clone)": //->10
                     answer = 10;
 					break;
-                case "2048(Clone)": //->3
+                case "2048(Clone)": //->11
                     answer = 11;
                     
 					break;

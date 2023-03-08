@@ -1,4 +1,5 @@
 using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,9 +20,11 @@ public class CreatCube : MonoBehaviour
     /// </summary>
     /// <returns>생성한큐브 리턴</returns>
     public void CubeSpawn(){
-        nowCube = Instantiate(cube2, gameObject.transform.position, Quaternion.identity);
-        Debug.Log(this.transform.position);
-        
+        Debug.Log("random"+MakeRandomCube(CubeManager.LargestCube));
+
+        nowCube = Instantiate(CubeManager.preCubes[MakeRandomCube(CubeManager.LargestCube-2)], gameObject.transform.position, Quaternion.identity);
+        //Debug.Log(this.transform.position);
+  
         
         nowCube.transform.SetParent(cubeParents.transform);
         nowCube.transform.SetAsLastSibling();
@@ -29,6 +32,11 @@ public class CreatCube : MonoBehaviour
 
         Gravity(nowCube, false);
 
+    }
+
+    public int MakeRandomCube(int max){
+        //CubeManager.LargestCube
+        return Random.Range(0, max+1);        
     }
     
     public void Gravity(GameObject obj ,bool gra){

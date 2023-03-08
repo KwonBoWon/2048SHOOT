@@ -8,15 +8,17 @@ public class CubeManager : MonoBehaviour
     public static CubeManager instance;
     SceneChange theSceneChange;
     public GameObject cubeParents;
+    public static int LargestCube; //가장 큰 큐브 저장
+
     void Awake() {
-        instance = this;    
+        instance = this;
     }
     void Start(){
+        LargestCube = 2;
         
-        //큐브 프리펩 찾아서 넣음
-        for(int i=1;i<=11;i++){
+        for(int i=1;i<=11;i++){//큐브 프리펩 찾아서 넣음 0-2, 1-4, ... 10-2048
             preCubes.Add(Resources.Load<GameObject>("Prefeb/"+(Mathf.Pow(2,i)).ToString()));
-            Debug.Log(preCubes[i-1]);
+            //Debug.Log(preCubes[i-1]);
         }
         theSceneChange = FindObjectOfType<SceneChange>();
     }
@@ -37,12 +39,16 @@ public class CubeManager : MonoBehaviour
         Cube cube1Cube = cube1.GetComponent<Cube>();
         Cube cube2Cube = cube2.GetComponent<Cube>();
 
-        Vector3 core = new Vector3(0f, -3.7f, 11f);
+        Vector3 core = new Vector3(0f, -3.7f, 11f); //이거그냥 퍼블릭으로 넣을껄
 
         if(!cube1Cube.isUsed){
-            if((cube1.transform.transform.position - core).magnitude  < (cube2.transform.transform.position - core).magnitude){//두큐브중 core가까운 큐브위치에서 생성
+            if((cube1.transform.transform.position - core).magnitude  < (cube2.transform.transform.position - core).magnitude){ //두큐브중 core가까운 큐브위치에서 생성
                 Effect.audioSoure.Play(); //큐브 합치기 사운드
                 int cubeNum = StringToInt(cubeName);
+                if(cubeNum> LargestCube){ //가장 큰 큐브 저장
+                    LargestCube = cubeNum;
+                    Debug.Log("Largest" + LargestCube);
+                } 
                 if (cubeNum== 11) //큐브가 2048일때 엔딩씬으로
                 {
                     SceneChange theSceneChange;
@@ -103,7 +109,7 @@ public class CubeManager : MonoBehaviour
     /// </summary>
     /// <param name="param">큐브네임</param>
     /// <returns></returns>
-    public static int StringToInt(string param){//mathf log함수가 왜 오류나는지 모르겠음
+    public static int StringToInt(string param){//mathf log함수가 (Clone)때문에 안됨(생성할때 이름 바꾸면 되긴함)
         int answer = 0;
         switch(param) {
 				case "2(Clone)": //->1

@@ -37,7 +37,7 @@ public class CubeManager : MonoBehaviour
         Cube cube1Cube = cube1.GetComponent<Cube>();
         Cube cube2Cube = cube2.GetComponent<Cube>();
 
-        Vector3 core = new Vector3(0.1f, -2f, 8f);
+        Vector3 core = new Vector3(0f, -3.7f, 11f);
 
         if(!cube1Cube.isUsed){
             if((cube1.transform.transform.position - core).magnitude  < (cube2.transform.transform.position - core).magnitude){//두큐브중 core가까운 큐브위치에서 생성
@@ -55,12 +55,19 @@ public class CubeManager : MonoBehaviour
                 
                 Destroy(cube1); Destroy(cube2); //합쳐진큐브 삭제
             }
-            //cube1Cube.isUsed = true; //여러개 같이 합쳐지는것 방지
-            //StartCoroutine(IsUsedBack(cube1));
+            cube1Cube.isUsed = true; //여러개 같이 합쳐지는것 방지(cube1)
+            if(cube1Cube.isCoroutineOn){//코루틴이 실행중이면 중지하고 다시 실행
+                StopCoroutine(IsUsedBack(cube1));
+                StartCoroutine(IsUsedBack(cube1));
+            }
+            else{
+                StartCoroutine(IsUsedBack(cube1));
+            }
+            return;
 
         }
         else {
-            cube2Cube.isUsed = true; //여러개 같이 합쳐지는것 방지
+            cube2Cube.isUsed = true; //여러개 같이 합쳐지는것 방지(cube2)
             if(cube2Cube.isCoroutineOn){//코루틴이 실행중이면 중지하고 다시 실행
                 StopCoroutine(IsUsedBack(cube2));
                 StartCoroutine(IsUsedBack(cube2));

@@ -21,6 +21,12 @@ public class CubeManager : MonoBehaviour
         theSceneChange = FindObjectOfType<SceneChange>();
     }
 
+/*
+현재 버그생기는 이유(추측)
+코루틴으로 0.5초후 false를 리턴함
+이 0.5초사이 -> 0.49초쯤 함수가실행되면 false로 풀리고 이과정에서 큐브에서 에러가나는것으로 추정
+-> 코루틴이 실행중이면 코루틴을 중지하고 다시 코루틴을 시작해야함
+*/
     /// <summary>
     /// 큐브둘을 합쳐서 다음큐브를 만들고 큐브둘을 삭제함
     /// </summary>
@@ -55,7 +61,13 @@ public class CubeManager : MonoBehaviour
         }
         else {
             cube2Cube.isUsed = true; //여러개 같이 합쳐지는것 방지
-            StartCoroutine(IsUsedBack(cube2));
+            if(cube2Cube.isCoroutineOn){//코루틴이 실행중이면 중지하고 다시 실행
+                StopCoroutine(IsUsedBack(cube2));
+                StartCoroutine(IsUsedBack(cube2));
+            }
+            else{
+                StartCoroutine(IsUsedBack(cube2));
+            }
             return;
         }
     }
@@ -66,12 +78,16 @@ public class CubeManager : MonoBehaviour
     /// <param name="cube"></param>
     /// <returns></returns>
     IEnumerator IsUsedBack( GameObject cube){
-    
+        Cube cubeCube = cube.GetComponent<Cube>();
+
+        cubeCube.isCoroutineOn = true;//코루틴실행중
+        
         yield return new WaitForSeconds(0.5f);
     
         if(cube!=null){
-            Cube cubeCube = cube.GetComponent<Cube>();
+            
             cubeCube.isUsed = false;
+            cubeCube.isCoroutineOn = false;
         }
     }
 

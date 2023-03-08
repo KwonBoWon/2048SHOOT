@@ -41,3 +41,9 @@ public class Setting : MonoBehaviour
     }
 
 }
+/*
+세팅버튼누를때 큐브나가지않도록
+
+큐브 큰거 
+
+*/

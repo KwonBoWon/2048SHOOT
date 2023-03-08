@@ -5,8 +5,8 @@ using UnityEngine;
 public class Cube : MonoBehaviour
 {
     bool firstCollision = false;
-    public bool isUsed = false;
-    //첫번쨰충돌(벽이나 큐브) 까지 꺼야함
+    public bool isUsed = false; //첫번쨰충돌(벽이나 큐브) 까지 꺼야함 여러개 충돌시 함수 하나만 실행하기위해 사용
+    public bool isCoroutineOn = false;
     private void OnCollisionEnter(Collision collision)
     {   
         //if(isUsed){

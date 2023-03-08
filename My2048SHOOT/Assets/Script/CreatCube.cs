@@ -9,6 +9,7 @@ public class CreatCube : MonoBehaviour
     public static GameObject nowCube;
     public GameObject cube2;
     public GameObject cubeParents;
+    public static int nextCube;
 
     //public List<GameObject> cubeList = new List<GameObject>();
 
@@ -20,9 +21,9 @@ public class CreatCube : MonoBehaviour
     /// </summary>
     /// <returns>생성한큐브 리턴</returns>
     public void CubeSpawn(){
-        Debug.Log("random"+MakeRandomCube(CubeManager.LargestCube));
+        //Debug.Log("random"+MakeRandomCube(CubeManager.LargestCube));
 
-        nowCube = Instantiate(CubeManager.preCubes[MakeRandomCube(CubeManager.LargestCube-2)], gameObject.transform.position, Quaternion.identity);
+        nowCube = Instantiate(CubeManager.preCubes[nextCube], gameObject.transform.position, Quaternion.identity);
         //Debug.Log(this.transform.position);
   
         
@@ -34,9 +35,9 @@ public class CreatCube : MonoBehaviour
 
     }
 
-    public int MakeRandomCube(int max){
+    public static void MakeRandomCube(int max){
         //CubeManager.LargestCube
-        return Random.Range(0, max+1);        
+        nextCube = Random.Range(0, max + 1 - 2);//1/4까지중에 랜덤생성        
     }
     
     public void Gravity(GameObject obj ,bool gra){

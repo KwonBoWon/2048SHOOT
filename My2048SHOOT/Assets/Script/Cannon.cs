@@ -8,6 +8,8 @@ public class Cannon : MonoBehaviour
     public static Vector3 point;
     public GameObject powerTextobj;
     TextMeshProUGUI powerText;
+    public GameObject nextTextobj;
+    TextMeshProUGUI nextText;
 
     bool isDelay = false;
 
@@ -20,6 +22,7 @@ public class Cannon : MonoBehaviour
     {
         theCreatCube = FindObjectOfType<CreatCube>();
         powerText = powerTextobj.GetComponent<TextMeshProUGUI>();
+        nextText = nextTextobj.GetComponent<TextMeshProUGUI>();
         isDelay = false;
         power = 0;
     }
@@ -85,7 +88,7 @@ public class Cannon : MonoBehaviour
                 CreatCube.nowCube.GetComponent<BoxCollider>().enabled = false; // 발사전 합쳐져서 삭제되는것 방지
 
                 isDelay = true;
-                Invoke("isDelayFalse", 0.25f);//발사 딜레이
+                Invoke("isDelayFalse", 0.15f);//발사 딜레이
                 ShootCube(CreatCube.nowCube, power);
                 power = 0;
                 Debug.Log(CreatCube.nowCube);
@@ -94,6 +97,9 @@ public class Cannon : MonoBehaviour
 
                 CreatCube.nowCube.GetComponent<BoxCollider>().enabled = true;
                 //theCreatCube.CubeSpawn();   
+                CreatCube.MakeRandomCube(CubeManager.LargestCube);
+                nextText.text = $"Next: {Mathf.Pow(2, (CreatCube.nextCube + 1))}";
+                //$"A: {a} / B: {b} 1+2 = {1+2}“
             }
 
         }

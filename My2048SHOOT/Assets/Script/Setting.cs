@@ -15,6 +15,7 @@ public class Setting : MonoBehaviour
     /// </summary>
     public void SettingButton()
     {
+        CreatCube.onClick = true; //클릭시 큐브발사 방지
         if (isSettingOn)
         {
             settingUI.SetActive(false);

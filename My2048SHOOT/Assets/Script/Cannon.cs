@@ -77,7 +77,7 @@ public class Cannon : MonoBehaviour
                 powerText.text = power.ToString("F1");
             }
 
-            // 스페이스바를 떼면 발사
+            // 클릭을 떼면 발사
             if (Input.GetMouseButtonUp(0) && !CreatCube.onClick && !isDelay)
             {
 

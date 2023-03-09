@@ -11,6 +11,8 @@ public class Cannon : MonoBehaviour
     public GameObject nextTextobj;
     TextMeshProUGUI nextText;
 
+    public GameObject nextCubePrefab;
+    public GameObject nextCubePos;
     bool isDelay = false;
 
 
@@ -25,6 +27,12 @@ public class Cannon : MonoBehaviour
         nextText = nextTextobj.GetComponent<TextMeshProUGUI>();
         isDelay = false;
         power = 0;
+
+        nextCubePrefab = Instantiate(CubeManager.preCubes[0], nextCubePos.transform.position, Quaternion.identity);
+        nextCubePrefab.transform.localScale -= new Vector3(0.8f, 0.8f, 0.8f);
+        //Rigidbody rigi = nextCubePrefab.GetComponent<Rigidbody>();
+        Destroy(nextCubePrefab.GetComponent<Rigidbody>());
+        Destroy(nextCubePrefab.GetComponent<BoxCollider>());
     }
     /// <summary>
     /// 대포의 방향을 마우스좌표로 회전
@@ -49,7 +57,7 @@ public class Cannon : MonoBehaviour
     {
         Rigidbody rb;
         rb = cube.GetComponent<Rigidbody>();
-        rb.AddForce(point * power);
+        rb.AddForce(point * power, ForceMode.VelocityChange);
     }
 
     void Update()
@@ -75,7 +83,7 @@ public class Cannon : MonoBehaviour
             if (Input.GetMouseButton(0) && !CreatCube.onClick && !isDelay)
             {
                 
-                if (power < 35f) power = power + 10f * Time.deltaTime;
+                if (power < 10f) power = power + 1.5f * Time.deltaTime;
                 //Debug.Log(power);
                 powerText.text = power.ToString("F1");
             }
@@ -98,8 +106,14 @@ public class Cannon : MonoBehaviour
                 CreatCube.nowCube.GetComponent<BoxCollider>().enabled = true;
                 //theCreatCube.CubeSpawn();   
                 CreatCube.MakeRandomCube(CubeManager.LargestCube);
-                nextText.text = $"Next: {Mathf.Pow(2, (CreatCube.nextCube + 1))}";
-                //$"A: {a} / B: {b} 1+2 = {1+2}“
+                //nextText.text = $"Next: {Mathf.Pow(2, (CreatCube.nextCube + 1))}";
+                Destroy(nextCubePrefab);
+                nextCubePrefab = Instantiate(CubeManager.preCubes[CreatCube.nextCube], nextCubePos.transform.position, Quaternion.identity);
+                nextCubePrefab.transform.localScale -= new Vector3(0.8f, 0.8f, 0.8f);
+                //Rigidbody rigi = nextCubePrefab.GetComponent<Rigidbody>();
+                Destroy(nextCubePrefab.GetComponent<Rigidbody>());
+                Destroy(nextCubePrefab.GetComponent<BoxCollider>());
+                //$"A: {a} / B: {b} 1+2 = {1+2}“gameObject.transform.position
             }
 
         }

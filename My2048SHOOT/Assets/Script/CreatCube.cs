@@ -26,18 +26,34 @@ public class CreatCube : MonoBehaviour
         nowCube = Instantiate(CubeManager.preCubes[nextCube], gameObject.transform.position, Quaternion.identity);
         //Debug.Log(this.transform.position);
   
-        
         nowCube.transform.SetParent(cubeParents.transform);
         nowCube.transform.SetAsLastSibling();
         //cubeList.Add(nowCube);
 
         Gravity(nowCube, false);
-
     }
 
     public static void MakeRandomCube(int max){
         //CubeManager.LargestCube
-        nextCube = Random.Range(0, max + 1 - 2);//1/4까지중에 랜덤생성        
+        //nextCube = Random.Range(0, max + 1 - 2); //1/4까지중에 랜덤생성
+        max = max - 2; //가장 큰 숫자의 1/4
+        int cnt = 0;
+        while (cnt < max) //랜덤 요소
+        {
+            if (Random.Range(0, 2) == 1) //50%
+            {
+                cnt++;
+                continue;
+            }
+            else
+            {
+                nextCube = cnt;
+                return;
+            }
+        }
+        nextCube = cnt;
+        return;
+
     }
     
     public void Gravity(GameObject obj ,bool gra){

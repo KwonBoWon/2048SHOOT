@@ -9,6 +9,7 @@ public class CubeManager : MonoBehaviour
     SceneChange theSceneChange;
     public GameObject cubeParents;
     public static int LargestCube; //가장 큰 큐브 저장
+    public GameObject backPlane;
 
     void Awake() {
         instance = this;
@@ -58,7 +59,7 @@ public class CubeManager : MonoBehaviour
                 GameObject mergedCube = Instantiate(preCubes[cubeNum], cube1.transform.position, Quaternion.identity); //큐브생성
                 mergedCube.transform.SetParent(cubeParents.transform);
                 mergedCube.transform.SetAsLastSibling();
-                
+                BackPlaneChange(mergedCube);
                 Destroy(cube1); Destroy(cube2); //합쳐진큐브 삭제
             }
             cube1Cube.isUsed = true; //여러개 같이 합쳐지는것 방지(cube1)
@@ -103,6 +104,36 @@ public class CubeManager : MonoBehaviour
             cubeCube.isCoroutineOn = false;
         }
     }
+
+    private void BackPlaneChange(GameObject cube)
+    {
+        Material cubeMaterial = cube.GetComponent<MeshRenderer>().material;
+        Material backPlaneMaterial = backPlane.GetComponent<MeshRenderer>().material;
+
+        backPlane.GetComponent<MeshRenderer>().material = cubeMaterial;
+
+    }
+    /*
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+ 
+    public class ChangeMat : MonoBehaviour
+    {
+        public Material[] mat = new Material[2];
+ 
+        int i = 0;
+ 
+        public void ChangeCubeMat()
+        {
+            i = ++i % 2;
+ 
+            // Change Material
+            gameObject.GetComponent<MeshRenderer>().material = mat[i];
+        }
+    }
+ 
+      */
 
     /// <summary>
     /// log함수 대용

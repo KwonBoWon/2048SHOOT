@@ -2977,7 +2977,7 @@ Transform:
   m_GameObject: {fileID: 1411423308}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 1.3313947, y: -1.6, z: 21.7}
-  m_LocalScale: {x: 30, y: 30, z: 30}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3086,6 +3086,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2736213369850255027, guid: 1b0d7ba0c58404a4e9c6e98aa5fdad54, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2736213369850255027, guid: 1b0d7ba0c58404a4e9c6e98aa5fdad54, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: eab21d4377dd3b542b96b13adad2ef2a, type: 2}
@@ -3116,6 +3120,10 @@ PrefabInstance:
     - target: {fileID: 3892798968637367785, guid: 1b0d7ba0c58404a4e9c6e98aa5fdad54, type: 3}
       propertyPath: m_LocalPosition.z
       value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4045410863652869202, guid: 1b0d7ba0c58404a4e9c6e98aa5fdad54, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4045410863652869202, guid: 1b0d7ba0c58404a4e9c6e98aa5fdad54, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3659,6 +3667,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 070a5b282f98fb34890f680e76bacc6f, type: 3}
       propertyPath: m_Name
       value: Heart
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279095331347438348, guid: 070a5b282f98fb34890f680e76bacc6f, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 070a5b282f98fb34890f680e76bacc6f, type: 3}

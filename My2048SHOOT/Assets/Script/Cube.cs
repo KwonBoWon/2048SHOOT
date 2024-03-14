@@ -27,20 +27,9 @@ public class Cube : MonoBehaviour
             firstCollision = true;
         }
     }
-
-
-
-
-    // Start is called before the first frame update
     void Start()
     {
         firstCollision = false;
         isUsed = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
     }
 }

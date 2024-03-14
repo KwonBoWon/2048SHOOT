@@ -25,7 +25,7 @@ public class CreatCube : MonoBehaviour
 
         nowCube = Instantiate(CubeManager.preCubes[nextCube], gameObject.transform.position, Quaternion.identity);
         //Debug.Log(this.transform.position);
-  
+        CubeManager.cubeList.Add(nowCube); // 리스트에 추가
         nowCube.transform.SetParent(cubeParents.transform);
         nowCube.transform.SetAsLastSibling();
         //cubeList.Add(nowCube);

@@ -6,13 +6,6 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-    void Start()
-    {
-    }
-    void Update()
-    {
-    }
-
     public static void ShootCube(GameObject cube, float power){
         Rigidbody rb;
         rb = cube.GetComponent<Rigidbody>();   

@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
+
 
 public class CubeManager : MonoBehaviour
 {
@@ -10,13 +13,24 @@ public class CubeManager : MonoBehaviour
     public GameObject cubeParents;
     public static int LargestCube; //가장 큰 큐브 저장
     public GameObject backPlane;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highScoreText;
+    
+    public static int score;
+    public static int highScore;
+    public static List<GameObject> cubeList = new List<GameObject>();
 
     void Awake() {
         instance = this;
     }
-    void Start(){
-        LargestCube = 2;
+    void Start()
+    {
+        score = 0;
+        scoreText.text = "0";
+        highScore = PlayerPrefs.GetInt("HighScore");
+        highScoreText.text = highScore.ToString();
         
+        LargestCube = 2;
         for(int i=1;i<=11;i++){//큐브 프리펩 찾아서 넣음 0-2, 1-4, ... 10-2048
             preCubes.Add(Resources.Load<GameObject>("Prefeb/"+(Mathf.Pow(2,i)).ToString()));
             //Debug.Log(preCubes[i-1]);
@@ -24,12 +38,12 @@ public class CubeManager : MonoBehaviour
         theSceneChange = FindObjectOfType<SceneChange>();
     }
 
-/*
-현재 버그생기는 이유(추측)
-코루틴으로 0.5초후 false를 리턴함
-이 0.5초사이 -> 0.49초쯤 함수가실행되면 false로 풀리고 이과정에서 큐브에서 에러가나는것으로 추정
--> 코루틴이 실행중이면 코루틴을 중지하고 다시 코루틴을 시작해야함
-*/
+    /*
+    현재 버그생기는 이유(추측)
+    코루틴으로 0.5초후 false를 리턴함
+    이 0.5초사이 -> 0.49초쯤 함수가실행되면 false로 풀리고 이과정에서 큐브에서 에러가나는것으로 추정
+    -> 코루틴이 실행중이면 코루틴을 중지하고 다시 코루틴을 시작해야함
+    */
     /// <summary>
     /// 큐브둘을 합쳐서 다음큐브를 만들고 큐브둘을 삭제함
     /// </summary>
@@ -46,6 +60,17 @@ public class CubeManager : MonoBehaviour
             if((cube1.transform.transform.position - core).magnitude  < (cube2.transform.transform.position - core).magnitude){ //두큐브중 core가까운 큐브위치에서 생성
                 Effect.audioSoure.Play(); //큐브 합치기 사운드
                 int cubeNum = StringToInt(cubeName);
+
+                score += cubeNum * 2;
+                scoreText.text = score.ToString();
+
+                if (highScore <= score)
+                {
+                    highScore = score;
+                    highScoreText.text = highScore.ToString();
+                    PlayerPrefs.SetInt("HighScore", highScore);
+                }
+                
                 if(cubeNum> LargestCube){ //가장 큰 큐브 저장
                     LargestCube = cubeNum;
                     Debug.Log("Largest" + LargestCube);
@@ -59,8 +84,12 @@ public class CubeManager : MonoBehaviour
                 GameObject mergedCube = Instantiate(preCubes[cubeNum], cube1.transform.position, Quaternion.identity); //큐브생성
                 mergedCube.transform.SetParent(cubeParents.transform);
                 mergedCube.transform.SetAsLastSibling();
+                
+                cubeList.Add(mergedCube); // 큐브리스트 추가
                 BackPlaneChange(mergedCube);
+                cubeList.Remove(cube1); cubeList.Remove(cube2); // 큐브리스트 삭제
                 Destroy(cube1); Destroy(cube2); //합쳐진큐브 삭제
+                Debug.Log(cubeList.Count);
             }
             cube1Cube.isUsed = true; //여러개 같이 합쳐지는것 방지(cube1)
             if(cube1Cube.isCoroutineOn){//코루틴이 실행중이면 중지하고 다시 실행
